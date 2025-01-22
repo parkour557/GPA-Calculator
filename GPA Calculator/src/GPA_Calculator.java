@@ -30,6 +30,7 @@ public class GPA_Calculator {
                     break;
                 case 2:
                     // TODO: ADD THIS FEATURE
+
                     FileEditor.writeToFile(); // WRITES TO FILE
                     break;
                 case 3:
