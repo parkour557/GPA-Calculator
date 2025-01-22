@@ -7,8 +7,9 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class GPA_Calculator {
+    public static File saveData;
     public static void main(String[] args) throws IOException {
-        File saveData = new File("saveData.dat");
+        saveData = new File("saveData.dat");
         saveData.createNewFile();
 
         Scanner fileReader = new Scanner(saveData);
@@ -16,60 +17,18 @@ public class GPA_Calculator {
         HashMap<Integer, ArrayList<Semester>> allSemesters = new HashMap<>();
         HashMap<Integer, ArrayList<Course>> allCourses = new HashMap<>();
 
-        // READ FROM FILE
-
-        if (!fileReader.hasNext()) {
-            FileWriter temp = new FileWriter(saveData);
-
-            temp.write("0 0 0 0 0\n");
-
-            temp.close();
-        }
-
-        int totalCourses = 0;
-
-        for (int i = 0; i < 5; i++) {
-            allSemesters.put(i, new ArrayList<>());
-            allCourses.put(i, new ArrayList<>());
-        }
-
-        int[] numEach = new int[5];
-
-        for (int i = 0; i < 5; i++) {
-            numEach[i] = fileReader.nextInt();
-            totalCourses += numEach[i];
-        }
-        fileReader.nextLine();
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < numEach[i]; j++) {
-                String[] line = fileReader.nextLine().split(" ");
-                Course course;
-                if (line.length == 3) {
-                    course = new Course(line[0].replaceAll("_", " "),
-                            Integer.parseInt(line[1]), Integer.parseInt(line[2]));
-                    allSemesters.get(i).add(course.getSemesters()[0]);
-                } else {
-                    course = new Course(line[0].replaceAll("_", " "),
-                            Integer.parseInt(line[1]), Integer.parseInt(line[2]), Integer.parseInt(line[3]));
-                    allSemesters.get(i).add(course.getSemesters()[0]);
-                    allSemesters.get(i).add(course.getSemesters()[1]);
-                }
-                allCourses.get(i).add(course);
-            }
-        }
-
-        fileReader.close();
+        int totalCourses = FileEditor.readFromFile(); // READS FROM FILE
 
         // MAIN PROGRAM
 
         int command = 0;
         System.out.println("WELCOME" + ((totalCourses != 0) ? " BACK" : "") + " TO THE GPA CALCULATOR!\n");
 
-        while (command != 6) {
+        while (command != 7) {
             System.out.println("""
                     PICK A COMMAND:
                     1 - ADD A COURSE
+                    2 - ALTER A COURSE
                     2 - REMOVE A COURSE
                     3 - VIEW ALL COURSES
                     4 - RESET ALL COURSES
@@ -82,9 +41,12 @@ public class GPA_Calculator {
                     addCourse(userInput, allSemesters, allCourses);
                     break;
                 case 2:
-                    removeCourse(userInput, allSemesters, allCourses);
+                    // TODO: ADD THIS FEATURE
                     break;
                 case 3:
+                    removeCourse(userInput, allSemesters, allCourses);
+                    break;
+                case 4:
                     int maxLength = 0;
 
                     for (int i = 0; i < 5; i++) {
@@ -112,17 +74,17 @@ public class GPA_Calculator {
                     }
 
                     break;
-                case 4:
+                case 5:
                     for (int i = 0; i < 5; i++) {
                         allSemesters.put(i, new ArrayList<>());
                     }
 
                     System.out.println("SUCCESSFULLY REMOVED ALL COURSES!");
                     break;
-                case 5:
+                case 6:
                     calculateGPA(allSemesters);
                     break;
-                case 6:
+                case 7:
                     System.out.println("HAVE A GREAT DAY!");
                     break;
                 default:
@@ -133,22 +95,7 @@ public class GPA_Calculator {
             System.out.println();
         }
 
-        // WRITE TO FILE
-
-        FileWriter writer = new FileWriter(saveData, false);
-
-        for (int i = 0; i < 4; i++) {
-            writer.append(String.valueOf(allCourses.get(i).size())).append(" ");
-        }
-        writer.append(String.valueOf(allCourses.get(4).size())).append("\n");
-
-        for (int i = 0; i < 5; i++) {
-            for (Course course : allCourses.get(i)) {
-                writer.append(String.valueOf(course)).append("\n");
-            }
-        }
-
-        writer.close();
+        FileEditor.writeToFile(); // WRITES TO FILE
     }
 
     public static void addCourse(Scanner userInput, HashMap<Integer, ArrayList<Semester>> allSemesters,
