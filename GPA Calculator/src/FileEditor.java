@@ -20,6 +20,7 @@ public class FileEditor {
 
         writer.close();
     }
+
     public static int readFromFile() throws IOException {
         Scanner fileReader = new Scanner(GPA_Calculator.saveData);
 

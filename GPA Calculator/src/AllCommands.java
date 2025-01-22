@@ -2,6 +2,19 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class AllCommands {
+    public static int printCommands(Scanner userInput) {
+        System.out.println("""
+                    PICK A COMMAND:
+                    1 - ADD A COURSE
+                    2 - ALTER A COURSE
+                    3 - REMOVE A COURSE
+                    4 - VIEW ALL COURSES
+                    5 - RESET ALL COURSES
+                    6 - CALCULATE GPA
+                    7 - EXIT THE PROGRAM""");
+        return userInput.nextInt();
+    }
+
     public static void addCourse(Scanner userInput) {
         System.out.println("WHAT IS THE NAME OF THIS COURSE?");
         String name = userInput.nextLine();
@@ -55,6 +68,7 @@ public class AllCommands {
 
         System.out.println("COURSE CREATION SUCCESSFUL!");
     }
+
     public static void removeCourse(Scanner userInput) {
         System.out.println("WHAT IS THE NAME OF THE COURSE YOU WOULD LIKE TO REMOVE?");
         String name = userInput.nextLine();
@@ -66,6 +80,7 @@ public class AllCommands {
 
         System.out.println("COURSE REMOVAL SUCCESSFUL!");
     }
+
     public static void printCourseList() {
         int maxLength = 0;
 
@@ -92,6 +107,7 @@ public class AllCommands {
             }
         }
     }
+
     public static void calculateGPA() {
         double total = 0;
         int semesterCount = 0;

@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class GPA_Calculator {
     public static File saveData;
+
     public static void main(String[] args) throws IOException {
         saveData = new File("saveData.dat");
         saveData.createNewFile();
@@ -19,16 +20,8 @@ public class GPA_Calculator {
         System.out.println("WELCOME" + ((totalCourses != 0) ? " BACK" : "") + " TO THE GPA CALCULATOR!\n");
 
         while (command != 7) {
-            System.out.println("""
-                    PICK A COMMAND:
-                    1 - ADD A COURSE
-                    2 - ALTER A COURSE
-                    3 - REMOVE A COURSE
-                    4 - VIEW ALL COURSES
-                    5 - RESET ALL COURSES
-                    6 - CALCULATE GPA
-                    7 - EXIT THE PROGRAM""");
-            command = userInput.nextInt(); userInput.nextLine();
+            command = AllCommands.printCommands(userInput);
+            userInput.nextLine();
 
             switch (command) {
                 case 1:
