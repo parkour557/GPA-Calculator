@@ -44,30 +44,7 @@ public class GPA_Calculator {
                     removeCourse(userInput);
                     break;
                 case 4:
-                    int maxLength = 0;
-
-                    for (int i = 0; i < 5; i++) {
-                        for (Course course : Course.allCourses.get(i)) {
-                            maxLength = Math.max(maxLength, course.getName().length());
-                        }
-                    }
-
-                    for (int i = 0; i < 5; i++) {
-                        switch (i) {
-                            case 0 -> System.out.println("\nMATH COURSES:\n" + "-".repeat(13));
-                            case 1 -> System.out.println("\nENGLISH COURSES:\n" + "-".repeat(16));
-                            case 2 -> System.out.println("\nSCIENCE COURSES:\n" + "-".repeat(16));
-                            case 3 -> System.out.println("\nSOCIAL STUDIES COURSES:\n" + "-".repeat(23));
-                            case 4 -> System.out.println("\nFOREIGN LANGUAGE COURSES:\n" + "-".repeat(25));
-                        }
-
-                        if (Course.allCourses.get(i).isEmpty()) {
-                            System.out.println("NONE");
-                        }
-                        for (Course course : Course.allCourses.get(i)) {
-                            course.printCourse(maxLength + 5);
-                        }
-                    }
+                    printCourseList();
                     break;
                 case 5:
                     for (int i = 0; i < 5; i++) {
@@ -157,6 +134,33 @@ public class GPA_Calculator {
         }
 
         System.out.println("COURSE REMOVAL SUCCESSFUL!");
+    }
+
+    public static void printCourseList() {
+        int maxLength = 0;
+
+        for (int i = 0; i < 5; i++) {
+            for (Course course : Course.allCourses.get(i)) {
+                maxLength = Math.max(maxLength, course.getName().length());
+            }
+        }
+
+        for (int i = 0; i < 5; i++) {
+            switch (i) {
+                case 0 -> System.out.println("\nMATH COURSES:\n" + "-".repeat(13));
+                case 1 -> System.out.println("\nENGLISH COURSES:\n" + "-".repeat(16));
+                case 2 -> System.out.println("\nSCIENCE COURSES:\n" + "-".repeat(16));
+                case 3 -> System.out.println("\nSOCIAL STUDIES COURSES:\n" + "-".repeat(23));
+                case 4 -> System.out.println("\nFOREIGN LANGUAGE COURSES:\n" + "-".repeat(25));
+            }
+
+            if (Course.allCourses.get(i).isEmpty()) {
+                System.out.println("NONE");
+            }
+            for (Course course : Course.allCourses.get(i)) {
+                course.printCourse(maxLength + 5);
+            }
+        }
     }
 
     public static void calculateGPA() {
