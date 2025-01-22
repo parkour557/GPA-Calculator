@@ -29,22 +29,22 @@ public class GPA_Calculator {
                     PICK A COMMAND:
                     1 - ADD A COURSE
                     2 - ALTER A COURSE
-                    2 - REMOVE A COURSE
-                    3 - VIEW ALL COURSES
-                    4 - RESET ALL COURSES
-                    5 - CALCULATE GPA
-                    6 - EXIT THE PROGRAM""");
+                    3 - REMOVE A COURSE
+                    4 - VIEW ALL COURSES
+                    5 - RESET ALL COURSES
+                    6 - CALCULATE GPA
+                    7 - EXIT THE PROGRAM""");
             command = userInput.nextInt(); userInput.nextLine();
 
             switch (command) {
                 case 1:
-                    addCourse(userInput, allSemesters, allCourses);
+                    addCourse(userInput);
                     break;
                 case 2:
                     // TODO: ADD THIS FEATURE
                     break;
                 case 3:
-                    removeCourse(userInput, allSemesters, allCourses);
+                    removeCourse(userInput);
                     break;
                 case 4:
                     int maxLength = 0;
@@ -82,7 +82,7 @@ public class GPA_Calculator {
                     System.out.println("SUCCESSFULLY REMOVED ALL COURSES!");
                     break;
                 case 6:
-                    calculateGPA(allSemesters);
+                    calculateGPA();
                     break;
                 case 7:
                     System.out.println("HAVE A GREAT DAY!");
@@ -98,8 +98,7 @@ public class GPA_Calculator {
         FileEditor.writeToFile(); // WRITES TO FILE
     }
 
-    public static void addCourse(Scanner userInput, HashMap<Integer, ArrayList<Semester>> allSemesters,
-                                 HashMap<Integer, ArrayList<Course>> allCourses) {
+    public static void addCourse(Scanner userInput) {
         System.out.println("WHAT IS THE NAME OF THIS COURSE?");
         String name = userInput.nextLine();
 
@@ -141,49 +140,48 @@ public class GPA_Calculator {
         }
 
         for (int grade : grades) {
-            allSemesters.get(type).add(new Semester(name, grade, weight));
+            Semester.allSemesters.get(type).add(new Semester(name, grade, weight));
         }
 
         if (grades.length == 1) {
-            allCourses.get(type).add(new Course(name, weight, grades[0]));
+            Course.allCourses.get(type).add(new Course(name, weight, grades[0]));
         } else {
-            allCourses.get(type).add(new Course(name, weight, grades[0], grades[1]));
+            Course.allCourses.get(type).add(new Course(name, weight, grades[0], grades[1]));
         }
 
         System.out.println("COURSE CREATION SUCCESSFUL!");
     }
 
-    public static void removeCourse(Scanner userInput, HashMap<Integer, ArrayList<Semester>> allSemesters,
-                               HashMap<Integer, ArrayList<Course>> allCourses) {
+    public static void removeCourse(Scanner userInput) {
         System.out.println("WHAT IS THE NAME OF THE COURSE YOU WOULD LIKE TO REMOVE?");
         String name = userInput.nextLine();
 
         for (int i = 0; i < 5; i++) {
-            allSemesters.get(i).removeIf(semester -> semester.getName().equals(name));
-            allCourses.get(i).removeIf(course -> course.getName().equals(name));
+            Semester.allSemesters.get(i).removeIf(semester -> semester.getName().equals(name));
+            Course.allCourses.get(i).removeIf(course -> course.getName().equals(name));
         }
 
         System.out.println("COURSE REMOVAL SUCCESSFUL!");
     }
 
-    public static void calculateGPA(HashMap<Integer, ArrayList<Semester>> allSemesters) {
+    public static void calculateGPA() {
         double total = 0;
         int semesterCount = 0;
 
         for (int i = 0; i < 5; i++) {
-            Collections.sort(allSemesters.get(i));
-            Collections.reverse(allSemesters.get(i));
+            Collections.sort(Semester.allSemesters.get(i));
+            Collections.reverse(Semester.allSemesters.get(i));
         }
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < allSemesters.get(i).size() && j < 8; j++) {
-                total += allSemesters.get(i).get(j).convertToGPA();
+            for (int j = 0; j < Semester.allSemesters.get(i).size() && j < 8; j++) {
+                total += Semester.allSemesters.get(i).get(j).convertToGPA();
                 semesterCount++;
             }
         }
 
-        for (int j = 0; j < allSemesters.get(4).size() && j < 4; j++) {
-            total += allSemesters.get(4).get(j).convertToGPA();
+        for (int j = 0; j < Semester.allSemesters.get(4).size() && j < 4; j++) {
+            total += Semester.allSemesters.get(4).get(j).convertToGPA();
             semesterCount++;
         }
 
