@@ -12,10 +12,7 @@ public class GPA_Calculator {
         saveData = new File("saveData.dat");
         saveData.createNewFile();
 
-        Scanner fileReader = new Scanner(saveData);
         Scanner userInput = new Scanner(System.in);
-        HashMap<Integer, ArrayList<Semester>> allSemesters = new HashMap<>();
-        HashMap<Integer, ArrayList<Course>> allCourses = new HashMap<>();
 
         int totalCourses = FileEditor.readFromFile(); // READS FROM FILE
 
@@ -50,13 +47,13 @@ public class GPA_Calculator {
                     int maxLength = 0;
 
                     for (int i = 0; i < 5; i++) {
-                        for (int j = 0; j < allCourses.get(i).size(); j++) {
-                            maxLength = Math.max(maxLength, allCourses.get(i).get(j).getName().length());
+                        for (Course course : Course.allCourses.get(i)) {
+                            maxLength = Math.max(maxLength, course.getName().length());
                         }
                     }
 
-                    for (int key : allCourses.keySet()) {
-                        switch (key) {
+                    for (int i = 0; i < 5; i++) {
+                        switch (i) {
                             case 0 -> System.out.println("\nMATH COURSES:\n" + "-".repeat(13));
                             case 1 -> System.out.println("\nENGLISH COURSES:\n" + "-".repeat(16));
                             case 2 -> System.out.println("\nSCIENCE COURSES:\n" + "-".repeat(16));
@@ -64,19 +61,17 @@ public class GPA_Calculator {
                             case 4 -> System.out.println("\nFOREIGN LANGUAGE COURSES:\n" + "-".repeat(25));
                         }
 
-                        if (allCourses.get(key).isEmpty()) {
+                        if (Course.allCourses.get(i).isEmpty()) {
                             System.out.println("NONE");
                         }
-
-                        for (Course course : allCourses.get(key)) {
+                        for (Course course : Course.allCourses.get(i)) {
                             course.printCourse(maxLength + 5);
                         }
                     }
-
                     break;
                 case 5:
                     for (int i = 0; i < 5; i++) {
-                        allSemesters.put(i, new ArrayList<>());
+                        Semester.allSemesters.put(i, new ArrayList<>());
                     }
 
                     System.out.println("SUCCESSFULLY REMOVED ALL COURSES!");
