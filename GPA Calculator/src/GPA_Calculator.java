@@ -29,8 +29,7 @@ public class GPA_Calculator {
                     FileEditor.writeToFile(); // WRITES TO FILE
                     break;
                 case 2:
-                    // TODO: ADD THIS FEATURE
-
+                    AllCommands.alterCourse(userInput);
                     FileEditor.writeToFile(); // WRITES TO FILE
                     break;
                 case 3:

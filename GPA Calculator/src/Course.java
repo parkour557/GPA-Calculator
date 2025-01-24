@@ -5,8 +5,8 @@ public class Course {
     public static HashMap<Integer, ArrayList<Course>> allCourses = new HashMap<>();
     private String name;
     private int weight;
-    private final Semester first;
-    private final Semester second;
+    private Semester first;
+    private Semester second;
 
     public Course(String n, int w, int f, int s) {
         name = n;
@@ -24,6 +24,10 @@ public class Course {
 
     public String getName() {
         return name;
+    }
+
+    public int getWeight() {
+        return weight;
     }
 
     public Semester[] getSemesters() {
@@ -44,14 +48,14 @@ public class Course {
             second.setWeight(w);
     }
 
-    public void setSemesters(int f) {
-        first.setGrade(f);
+    public void setSemesters(Semester f) {
+        first = f;
+        second = null;
     }
 
-    public void setSemesters(int f, int s) {
-        first.setGrade(f);
-        if (second != null)
-            second.setGrade(s);
+    public void setSemesters(Semester f, Semester s) {
+        first = f;
+        second = s;
     }
 
     public void printCourse(int maxLength) {
