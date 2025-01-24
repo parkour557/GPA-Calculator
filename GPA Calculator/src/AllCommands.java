@@ -151,8 +151,7 @@ public class AllCommands {
                             WHAT WOULD YOU LIKE THE NEW COURSE TYPE TO BE?
                             0 - NORMAL
                             1 - ADVANCED
-                            2 - AP
-                            """);
+                            2 - AP""");
                     int type = userInput.nextInt();
 
                     while (type > 2 || type < 0) {
@@ -161,8 +160,7 @@ public class AllCommands {
                             WHAT WOULD YOU LIKE THE NEW COURSE TYPE TO BE?
                             0 - NORMAL
                             1 - ADVANCED
-                            2 - AP
-                            """);
+                            2 - AP""");
                         type = userInput.nextInt();
                     }
 
@@ -198,9 +196,10 @@ public class AllCommands {
 
                         foundCourse.setSemesters(firstFoundSemester, secondFoundSemester);
                         for (int i = 0; i < 5; i++) {
-                            for (Semester semester : Semester.allSemesters.get(i)) {
-                                if (firstFoundSemester.equals(semester)) {
-                                    Semester.allSemesters.get(i).add(secondFoundSemester);
+                            for (int j = 0; j < Semester.allSemesters.get(i).size(); j++) {
+                                if (firstFoundSemester.equals(Semester.allSemesters.get(i).get(j))) {
+                                    Semester.allSemesters.get(i).add(j, secondFoundSemester);
+                                    j++;
                                 }
                             }
                         }
@@ -214,10 +213,12 @@ public class AllCommands {
                         }
                         secondFoundSemester = null;
                     }
+                    System.out.println("NUMBER OF SEMESTERS CHANGED SUCCESSFULLY!");
                     break;
                 case 3:
                     System.out.println("WHAT IS THE NEW FIRST SEMESTER GRADE?");
                     firstFoundSemester.setGrade(userInput.nextInt());
+                    System.out.println("FIRST SEMESTER GRADE CHANGED SUCCESSFULLY!");
                     break;
                 case 4:
                     if (secondFoundSemester == null) {
@@ -226,6 +227,7 @@ public class AllCommands {
                         System.out.println("WHAT IS THE SECOND SEMESTER GRADE?");
                         secondFoundSemester.setGrade(userInput.nextInt());
                     }
+                    System.out.println("SECOND SEMESTER GRADE CHANGED SUCCESSFULLY!");
                     break;
                 default:
                     System.out.println("NOT A VALID COMMAND. TRY AGAIN.");

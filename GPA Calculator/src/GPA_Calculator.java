@@ -42,6 +42,7 @@ public class GPA_Calculator {
                 case 5:
                     for (int i = 0; i < 5; i++) {
                         Semester.allSemesters.put(i, new ArrayList<>());
+                        Course.allCourses.put(i, new ArrayList<>());
                     }
                     FileEditor.writeToFile(); // WRITES TO FILE
                     System.out.println("SUCCESSFULLY REMOVED ALL COURSES!");
